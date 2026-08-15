@@ -3,12 +3,13 @@ import dotenv from "dotenv";
 import proxy from "express-http-proxy";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
 
 dotenv.config();
+const app = express();
 
 const port = process.env.PORT;
-const app = express();
-app.use(express.json());
+
 console.log("fronted url:", process.env.FRONTEND_URL);
 app.use(
   cors({
@@ -17,12 +18,16 @@ app.use(
   }),
 );
 app.use(cookieParser());
+app.use(morgan("dev"));
 
-app.use("/auth", proxy(process.env.AUTH_SERVICES));
+app.use("/auth", proxy(process.env.AUTH_SERVICES_URL));
 
-// app.use("/", (_, res) => {
-//   res.json({ message: "Server from Gateway." });
-// });
+app.get("/health", (_, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "api-gateway",
+  });
+});
 
 app.listen(port, () => {
   console.log(`Gateway is listening on port ${port} successfully.`);

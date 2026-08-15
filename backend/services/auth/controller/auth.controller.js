@@ -22,17 +22,24 @@ export const login = async (req, res) => {
     }
 
     const sessionId = crypto.randomUUID();
+    await redis.set(
+      `session-${sessionId}`,
+      JSON.stringify({
+        userId: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+      }),
+      "EX",
+      7 * 24 * 60 * 60,
+    );
     res.cookie("session", sessionId, {
       httpOnly: true,
       secure: false,
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    await redis.set(`session-${sessionId},JSON.stringify({
-      userId.user._id,
-      name:user.name,
-      email:user.email,
-      avatar:user.avatar})`);
+
     console.log("user:", user);
     return res
       .status(200)
@@ -40,5 +47,17 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log("error from login server:", error);
     res.status(500).json({ message: error });
+  }
+};
+
+export const logOut = async (req, res) => {
+  try {
+    const sessionId = req.cookies?.session;
+    await redis.del(`session-${sessionId}`);
+    return res.status(200).json({ message: "Logout Successfully." });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong while loggin out", error });
   }
 };
