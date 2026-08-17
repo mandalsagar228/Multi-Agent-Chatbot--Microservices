@@ -1,4 +1,4 @@
-import { getModel } from "../config/llmModels";
+import { getModel } from "../config/llmModels.js";
 
 export const router = async (state) => {
   const llm = await getModel("router");
@@ -18,6 +18,7 @@ export const router = async (state) => {
             General conversation,
             explanation,
             Learning,questions
+
         search:
             Current events,
             latest information,
@@ -43,6 +44,9 @@ export const router = async (state) => {
         vision:
             Generate image,
             create image,
+
+        RETURN only one word:
+         chat,search,coding,pdf,ppt,vision    
         
         
         user query:
