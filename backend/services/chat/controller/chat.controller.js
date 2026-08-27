@@ -6,10 +6,12 @@ export const createConversation = async (req, res) => {
     const userId = req.headers["x-user-id"];
     console.log("x-user-id:", userId);
 
-    const conversation = await conversation.create({
+    const conversation = await Conversation.create({
       userId: userId,
     });
+    return res.status(201).json(conversation);
   } catch (error) {
+    console.log("error from createConversation-server:", error);
     return res
       .status(500)
       .json({ message: "error while creating createConversation", error });

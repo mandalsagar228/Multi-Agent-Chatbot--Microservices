@@ -5,7 +5,7 @@ const protect = async (req, res, next) => {
     const sessionId = req.cookies?.session;
     if (!sessionId) {
       console.log("unauthorized");
-      return resizeBy.status(400).json({ message: "unathorized" });
+      return res.status(400).json({ message: "unathorized" });
     }
     const session = await redis.get(`session-${sessionId}`);
     if (!session) {
