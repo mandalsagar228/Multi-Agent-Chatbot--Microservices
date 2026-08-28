@@ -1,6 +1,9 @@
 import {
+  Coins,
+  LogOut,
   MessageSquare,
   PanelLeftIcon,
+  PanelRight,
   PenBoxIcon,
   Plus,
   User,
@@ -14,6 +17,8 @@ import {
   setSelectedConversation,
 } from "../../redux/conversationSlice";
 import { createConversation } from "../../features/createConversation";
+import logout from "../../features/logout";
+import { setUserData } from "../../redux/userSlice";
 
 const Sidebar = () => {
   const [collapse, setCollapse] = useState(false);
@@ -35,6 +40,27 @@ const Sidebar = () => {
     const data = await createConversation();
     dispatch(addConversation(data));
   };
+
+  if (collapse) {
+    return (
+      <div className=" hidden lg:flex flex-col items-center w-[56px] h-screen bg-[#0d0f14] border-r border-white/[0.06] py-4 gap-1 shrink-0  ">
+        <button
+          className=" flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:text-slate-200  hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer mb-1"
+          onClick={() => setCollapse(false)}
+        >
+          <PanelRight />
+        </button>
+
+        <button
+          className=" flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:text-slate-200  hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
+          onClick={() => handleCreateConversation()}
+        >
+          <Plus size={17} />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className=" fixed lg:static inset-y-0 left-0 z-50  w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06]">
@@ -119,6 +145,20 @@ const Sidebar = () => {
                   <p className=" text-[11px] text-slate-600 mt-px">
                     {"Free plan"}
                   </p>
+                </div>
+
+                <div className=" flex gap-1">
+                  <button className=" flex items-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/[0.08] hover:text-slate-400 translate-all duration-150">
+                    <Coins size={16} />
+                  </button>
+                  <button
+                    className=" flex items-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-slate-600 cursor-pointer hover:bg-white/[0.08] hover:text-slate-400 transition-all duration-150"
+                    onClick={() => {
+                      (logout(), dispatch(setUserData(null)));
+                    }}
+                  >
+                    <LogOut size={16} />
+                  </button>
                 </div>
               </div>
             ) : (
