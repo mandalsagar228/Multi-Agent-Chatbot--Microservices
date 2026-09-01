@@ -124,7 +124,7 @@ const Sidebar = () => {
             {userData ? (
               <div className=" flex items-center gap-2.5 cursor-pointer rounded-xl px-3 py-2.5 hover:bg-white/[0.05] transition-colors duration-150">
                 <div className=" relative shrink-0">
-                  {userData?.avatar || !imageErr ? (
+                  {userData?.avatar && !imageErr ? (
                     <img
                       className=" w-9 h-9 rounded-[10px] object-cover border-2 border-indigo-500/25"
                       src={userData?.avatar}

@@ -65,12 +65,15 @@ export const saveMessage = async (req, res) => {
 
 export const getMessage = async (req, res) => {
   try {
-    const { conversationId } = req.params.conversationId;
-    const message = (await Message.find({ conversationId })).sort({
+    console.log("req-params:", req.params);
+    const { conversationId } = req.params;
+    console.log("conversationId:", conversationId);
+    const message = await Message.find({ conversationId }).sort({
       createdAt: -1,
     });
     return res.status(200).json(message);
   } catch (error) {
+    console.log("Error from  getMessage-backend:", error);
     return res
       .status(500)
       .json({ message: "error while calling get message", error });

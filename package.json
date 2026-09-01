@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "redis": "docker compose -f backend/docker-compose.yml up -d",
+    "dev": "npm run redis && concurrently -k -n GATEWAY,AUTH,CHAT,AGENT,FRONTEND \"npm run dev --prefix backend/gateway\" \"npm run dev --prefix backend/services/auth\" \"npm run dev --prefix backend/services/chat\" \"npm run dev --prefix backend/services/agent\" \"npm run dev --prefix frontend\"",
+    "auth": "npm --prefix backend/services/auth",
+    "chat": "npm --prefix backend/services/chat",
+    "agent": "npm --prefix backend/services/agent",
+    "gateway": "npm --prefix backend/gateway",
+    "frontend": "npm --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
