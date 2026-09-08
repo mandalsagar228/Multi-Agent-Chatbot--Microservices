@@ -18,7 +18,7 @@ workflow.addNode("pdf", pdfAgent);
 workflow.addNode("ppt", pptAgent);
 workflow.addNode("vision", visionAgent);
 
-workflow.addEdge("__start__", router);
+workflow.addEdge("__start__", "router");
 workflow.addConditionalEdges(
   "router",
   (state) => {

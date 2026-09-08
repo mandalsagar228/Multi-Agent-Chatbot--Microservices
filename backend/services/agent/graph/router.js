@@ -54,6 +54,7 @@ export const router = async (state) => {
                 `;
 
   const response = await llm.invoke(prompt);
+  console.log("response from llm:", response.content);
 
   return {
     ...state,

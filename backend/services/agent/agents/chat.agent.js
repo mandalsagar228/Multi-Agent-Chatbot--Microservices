@@ -1,4 +1,4 @@
-import { getModel } from "../config/llmModels";
+import { getModel } from "../config/llmModels.js";
 
 export const chatAgent = async (state) => {
   const llm = await getModel("chat");
@@ -11,9 +11,9 @@ export const chatAgent = async (state) => {
       content: state.prompt,
     },
   ]);
-
+  console.log("response from chatagent:", response.content);
   return {
     ...state,
-    aiResponse: response.content,
+    aiResponse: response?.content,
   };
 };

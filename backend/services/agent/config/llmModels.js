@@ -21,6 +21,6 @@ export const getModel = async (agent) => {
       return gemini;
 
     default:
-      groq;
+      return groq;
   }
 };
