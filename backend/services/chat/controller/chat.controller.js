@@ -68,9 +68,7 @@ export const getMessage = async (req, res) => {
     console.log("req-params:", req.params);
     const { conversationId } = req.params;
     console.log("conversationId:", conversationId);
-    const message = await Message.find({ conversationId }).sort({
-      createdAt: -1,
-    });
+    const message = await Message.find({ conversationId });
     return res.status(200).json(message);
   } catch (error) {
     console.log("Error from  getMessage-backend:", error);
